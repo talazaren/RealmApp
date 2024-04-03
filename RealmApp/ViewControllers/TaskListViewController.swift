@@ -42,14 +42,11 @@ final class TaskListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskListCell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
+        guard let cell = cell as? TaskListCell else { return UITableViewCell() }
         
-        let sortedTaskList = getSortedList()
-        let taskList = sortedTaskList[indexPath.row]
-        content.text = taskList.title
-        content.secondaryText = getCount(taskList.tasks).formatted()
+        let taskList = getSortedList()[indexPath.row]
+        cell.configure(with: taskList)
         
-        cell.contentConfiguration = content
         return cell
     }
     
